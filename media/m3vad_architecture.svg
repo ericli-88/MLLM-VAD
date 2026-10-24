@@ -1,0 +1,231 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="760" viewBox="0 0 1800 760" role="img" aria-labelledby="title desc">
+  <title id="title">M³VAD architecture</title>
+  <desc id="desc">Scientific block diagram of multimodal observation construction, Dynamic Normality Memory, and memory-augmented anomaly scoring.</desc>
+
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#374151"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#557a9e"/>
+    </marker>
+    <marker id="arrowOchre" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#a77b25"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#527c58"/>
+    </marker>
+    <style>
+      text { font-family: Arial, Helvetica, sans-serif; fill: #20252b; }
+      .heading { font-size: 22px; font-weight: 700; }
+      .label { font-size: 16px; font-weight: 600; }
+      .small { font-size: 14px; }
+      .tiny { font-size: 12.5px; }
+      .math { font-family: Georgia, "Times New Roman", serif; font-style: italic; }
+      .panel { fill: #ffffff; stroke: #8a929c; stroke-width: 1.4; stroke-dasharray: 6 5; }
+      .panel-memory { fill: #fffdf7; stroke: #aa8438; stroke-width: 1.5; stroke-dasharray: 6 5; }
+      .panel-output { fill: #fbfefb; stroke: #64806a; stroke-width: 1.5; stroke-dasharray: 6 5; }
+      .box { fill: #ffffff; stroke: #4b5563; stroke-width: 1.35; }
+      .vlm { fill: #eef4f8; stroke: #557a9e; stroke-width: 1.5; }
+      .memory { fill: #fbf5e7; stroke: #a77b25; stroke-width: 1.5; }
+      .output { fill: #eef6ef; stroke: #527c58; stroke-width: 1.5; }
+      .note { fill: #ffffff; stroke: #9ca3af; stroke-width: 1.1; stroke-dasharray: 4 3; }
+      .flow { fill: none; stroke: #374151; stroke-width: 1.55; marker-end: url(#arrow); }
+      .flow-blue { fill: none; stroke: #557a9e; stroke-width: 1.65; marker-end: url(#arrowBlue); }
+      .flow-ochre { fill: none; stroke: #a77b25; stroke-width: 1.75; marker-end: url(#arrowOchre); }
+      .flow-green { fill: none; stroke: #527c58; stroke-width: 1.65; marker-end: url(#arrowGreen); }
+      .guide { fill: none; stroke: #6b7280; stroke-width: 1.2; stroke-dasharray: 4 3; }
+    </style>
+  </defs>
+
+  <rect width="1800" height="760" fill="#ffffff"/>
+
+  <!-- (a) Multimodal observation construction -->
+  <rect class="panel" x="15" y="15" width="700" height="665" rx="3"/>
+  <text class="heading" x="32" y="48">(a) Multi-modal observation construction</text>
+
+  <text class="label" x="40" y="84">Video frames</text>
+  <rect class="box" x="40" y="96" width="210" height="48"/>
+  <rect x="49" y="104" width="32" height="32" fill="#d9dde2" stroke="#6b7280"/>
+  <rect x="89" y="104" width="32" height="32" fill="#eef0f2" stroke="#6b7280"/>
+  <text class="small" x="133" y="125">⋯</text>
+  <rect x="159" y="104" width="32" height="32" fill="#d9dde2" stroke="#6b7280"/>
+  <rect x="199" y="104" width="32" height="32" fill="#eef0f2" stroke="#6b7280"/>
+
+  <rect class="box" x="40" y="172" width="210" height="56"/>
+  <text class="label" x="145" y="194" text-anchor="middle">Target frame <tspan class="math">t</tspan></text>
+  <text class="small" x="145" y="216" text-anchor="middle">stride = 10 frames</text>
+  <path class="flow" d="M145 144 V171"/>
+
+  <rect class="note" x="40" y="260" width="210" height="88"/>
+  <text class="label" x="145" y="283" text-anchor="middle">Centered temporal window</text>
+  <text class="small math" x="145" y="305" text-anchor="middle">[t − 150, t + 150]</text>
+  <line x1="60" y1="325" x2="230" y2="325" stroke="#6b7280" stroke-width="1.2"/>
+  <line x1="145" y1="315" x2="145" y2="335" stroke="#557a9e" stroke-width="2"/>
+  <text class="tiny" x="145" y="344" text-anchor="middle">up to 301 frames; boundary-clipped</text>
+  <path class="flow" d="M145 228 V259"/>
+
+  <rect class="vlm" x="292" y="94" width="115" height="54"/>
+  <text class="label" x="349.5" y="127" text-anchor="middle">BLIP-2</text>
+  <rect class="box" x="448" y="94" width="135" height="54"/>
+  <text class="label" x="515.5" y="117" text-anchor="middle">Frame caption</text>
+  <text class="small math" x="515.5" y="137" text-anchor="middle">c<tspan baseline-shift="sub" font-size="11">t</tspan></text>
+  <path class="flow-blue" d="M250 190 H270 V121 H291"/>
+  <path class="flow-blue" d="M407 121 H447"/>
+
+  <rect class="box" x="292" y="263" width="150" height="54"/>
+  <text class="label" x="367" y="286" text-anchor="middle">Uniform temporal</text>
+  <text class="label" x="367" y="306" text-anchor="middle">sampling</text>
+  <rect class="vlm" x="472" y="263" width="150" height="54"/>
+  <text class="label" x="547" y="286" text-anchor="middle">LLaVA-</text>
+  <text class="label" x="547" y="306" text-anchor="middle">OneVision</text>
+  <rect class="box" x="472" y="345" width="150" height="54"/>
+  <text class="label" x="547" y="368" text-anchor="middle">10 s summary</text>
+  <text class="small math" x="547" y="388" text-anchor="middle">s<tspan baseline-shift="sub" font-size="11">t</tspan></text>
+  <path class="flow-blue" d="M250 304 H291"/>
+  <path class="flow-blue" d="M442 290 H471"/>
+  <path class="flow-blue" d="M547 317 V344"/>
+
+  <rect class="vlm" x="292" y="365" width="115" height="54"/>
+  <text class="label" x="349.5" y="398" text-anchor="middle">ImageBind</text>
+  <rect class="box" x="292" y="449" width="150" height="54"/>
+  <text class="label" x="367" y="472" text-anchor="middle">Visual embedding</text>
+  <text class="small math" x="367" y="492" text-anchor="middle">v<tspan baseline-shift="sub" font-size="11">t</tspan></text>
+  <path class="flow-blue" d="M250 200 H272 V392 H291"/>
+  <path class="guide" d="M250 330 H270 V405 H291"/>
+  <path class="flow-blue" d="M349.5 419 V448"/>
+
+  <rect class="vlm" x="292" y="548" width="150" height="54"/>
+  <text class="label" x="367" y="571" text-anchor="middle">Sentence</text>
+  <text class="label" x="367" y="591" text-anchor="middle">Transformer</text>
+  <rect class="box" x="485" y="528" width="115" height="54"/>
+  <text class="small" x="542.5" y="551" text-anchor="middle">Caption</text>
+  <text class="small" x="542.5" y="570" text-anchor="middle">embedding <tspan class="math">e</tspan><tspan baseline-shift="sub" font-size="10">c</tspan></text>
+  <rect class="box" x="485" y="598" width="115" height="54"/>
+  <text class="small" x="542.5" y="621" text-anchor="middle">Summary</text>
+  <text class="small" x="542.5" y="640" text-anchor="middle">embedding <tspan class="math">e</tspan><tspan baseline-shift="sub" font-size="10">s</tspan></text>
+  <path class="flow" d="M515 148 V520 H367 V547"/>
+  <path class="flow" d="M622 372 H650 V520 H367 V547"/>
+  <path class="flow-blue" d="M442 565 H484"/>
+  <path class="flow-blue" d="M442 585 H466 V625 H484"/>
+
+  <text class="tiny" x="612" y="505">Visual path</text>
+  <path class="flow-blue" d="M442 476 H725"/>
+  <text class="tiny" x="610" y="555">Text paths</text>
+  <path class="flow-blue" d="M600 555 H725"/>
+  <path class="flow-blue" d="M600 625 H690 V575 H725"/>
+
+  <!-- (b) Dynamic Normality Memory -->
+  <rect class="panel-memory" x="730" y="15" width="640" height="665" rx="3"/>
+  <text class="heading" x="748" y="48">(b) Dynamic Normality Memory (core contribution)</text>
+
+  <rect class="vlm" x="780" y="82" width="205" height="62"/>
+  <text class="label" x="882.5" y="107" text-anchor="middle">Base LLM scorer</text>
+  <text class="small" x="882.5" y="130" text-anchor="middle">without memory</text>
+  <rect class="box" x="1060" y="82" width="170" height="62"/>
+  <text class="label" x="1145" y="107" text-anchor="middle">Base score</text>
+  <text class="small math" x="1145" y="130" text-anchor="middle">b<tspan baseline-shift="sub" font-size="11">t</tspan></text>
+  <path class="flow" d="M715 112 H779"/>
+  <text class="tiny" x="725" y="101">c<tspan baseline-shift="sub" font-size="9">t</tspan>, s<tspan baseline-shift="sub" font-size="9">t</tspan></text>
+  <path class="flow" d="M985 113 H1059"/>
+
+  <rect class="memory" x="765" y="260" width="140" height="82" rx="2"/>
+  <text class="label" x="835" y="293" text-anchor="middle">Pending</text>
+  <text class="label" x="835" y="316" text-anchor="middle">memory</text>
+
+  <rect class="memory" x="950" y="210" width="215" height="182"/>
+  <text class="label" x="1057.5" y="239" text-anchor="middle">Reliability gate</text>
+  <text class="small" x="970" y="268">• base-score agreement</text>
+  <text class="small" x="970" y="293">• visual–text consistency</text>
+  <text class="small" x="970" y="318">• temporal stability</text>
+  <text class="small" x="970" y="343">• conflict rejection</text>
+  <text class="small" x="970" y="368">• duplicate filtering</text>
+
+  <rect class="memory" x="1210" y="260" width="130" height="82" rx="2"/>
+  <text class="label" x="1275" y="293" text-anchor="middle">Trusted</text>
+  <text class="label" x="1275" y="316" text-anchor="middle">memory M<tspan baseline-shift="sub" font-size="11">t</tspan></text>
+  <path class="flow-ochre" d="M905 301 H949"/>
+  <path class="flow-ochre" d="M1165 301 H1209"/>
+  <path class="flow" d="M1145 144 V180 H1090 V209"/>
+  <text class="tiny" x="1152" y="175">base-score check</text>
+
+  <rect class="note" x="765" y="418" width="575" height="48"/>
+  <text class="small" x="1052.5" y="439" text-anchor="middle">Memory entry = {caption, summary, visual/text embeddings,</text>
+  <text class="small" x="1052.5" y="458" text-anchor="middle">base/final scores, timestamp, reliability, status}</text>
+
+  <rect class="memory" x="765" y="500" width="575" height="126"/>
+  <text class="label" x="1052.5" y="526" text-anchor="middle">FAISS two-stage retrieval</text>
+  <rect class="box" x="790" y="548" width="145" height="48"/>
+  <text class="small" x="862.5" y="568" text-anchor="middle">Scene-aware</text>
+  <text class="small" x="862.5" y="587" text-anchor="middle">candidates</text>
+  <rect class="box" x="975" y="548" width="145" height="48"/>
+  <text class="small" x="1047.5" y="568" text-anchor="middle">Action/summary</text>
+  <text class="small" x="1047.5" y="587" text-anchor="middle">re-ranking</text>
+  <rect class="box" x="1160" y="548" width="150" height="48"/>
+  <text class="small" x="1235" y="568" text-anchor="middle">Diverse Top-K</text>
+  <text class="small" x="1235" y="587" text-anchor="middle">references</text>
+  <path class="flow" d="M935 572 H974"/>
+  <path class="flow" d="M1120 572 H1159"/>
+  <path class="flow" d="M1275 342 V499"/>
+  <path class="flow-blue" d="M715 575 H789"/>
+  <text class="tiny" x="773" y="647">Earlier trusted frames only • current frame excluded • temporal diversity</text>
+  <text class="tiny" x="910" y="667">Per-video isolation • no ground-truth labels</text>
+
+  <!-- (c) Memory-augmented scoring -->
+  <rect class="panel-output" x="1385" y="15" width="400" height="665" rx="3"/>
+  <text class="heading" x="1403" y="48">(c) Memory-augmented scoring</text>
+
+  <rect class="box" x="1408" y="82" width="145" height="52"/>
+  <text class="small math" x="1480.5" y="113" text-anchor="middle">c<tspan baseline-shift="sub" font-size="10">t</tspan>, s<tspan baseline-shift="sub" font-size="10">t</tspan></text>
+  <rect class="box" x="1408" y="151" width="145" height="52"/>
+  <text class="small" x="1480.5" y="173" text-anchor="middle">Top-K memory</text>
+  <text class="small" x="1480.5" y="192" text-anchor="middle">references</text>
+  <rect class="box" x="1408" y="220" width="145" height="64"/>
+  <text class="small" x="1480.5" y="241" text-anchor="middle">Visual / caption /</text>
+  <text class="small" x="1480.5" y="261" text-anchor="middle">summary similarities</text>
+  <text class="tiny" x="1480.5" y="278" text-anchor="middle">within-space fusion</text>
+  <rect class="box" x="1408" y="301" width="145" height="58"/>
+  <text class="small" x="1480.5" y="325" text-anchor="middle">Normality Support</text>
+  <text class="tiny" x="1480.5" y="347" text-anchor="middle">evidence, not P(normal)</text>
+
+  <rect class="vlm" x="1600" y="151" width="160" height="90"/>
+  <text class="label" x="1680" y="181" text-anchor="middle">Memory-augmented</text>
+  <text class="label" x="1680" y="205" text-anchor="middle">LLM scorer</text>
+  <text class="tiny" x="1680" y="226" text-anchor="middle">English structured prompt</text>
+  <path class="flow" d="M1553 108 H1575 V170 H1599"/>
+  <path class="flow" d="M1553 177 H1599"/>
+  <path class="flow" d="M1553 252 H1575 V198 H1599"/>
+  <path class="flow" d="M1553 330 H1585 V222 H1599"/>
+  <path class="flow-green" d="M1310 572 H1360 V177 H1407"/>
+  <text class="tiny" x="1325" y="558">retrieval evidence</text>
+
+  <rect class="box" x="1600" y="278" width="160" height="58"/>
+  <text class="label" x="1680" y="302" text-anchor="middle">Structured JSON</text>
+  <text class="tiny" x="1680" y="324" text-anchor="middle">score + separate evidence</text>
+  <path class="flow" d="M1680 241 V277"/>
+
+  <rect class="output" x="1572" y="378" width="188" height="74"/>
+  <text class="label" x="1666" y="404" text-anchor="middle">Discrete target score</text>
+  <text class="small math" x="1666" y="427" text-anchor="middle">a<tspan baseline-shift="sub" font-size="11">t</tspan> ∈ {0.0, 0.1, …, 1.0}</text>
+  <text class="tiny" x="1666" y="445" text-anchor="middle">validated; retry on invalid JSON</text>
+  <path class="flow-green" d="M1680 336 V377"/>
+
+  <rect class="box" x="1572" y="493" width="188" height="58"/>
+  <text class="label" x="1666" y="518" text-anchor="middle">Frame-level</text>
+  <text class="label" x="1666" y="540" text-anchor="middle">interpolation</text>
+  <path class="flow-green" d="M1666 452 V492"/>
+
+  <rect class="output" x="1572" y="590" width="188" height="56"/>
+  <text class="label" x="1666" y="623" text-anchor="middle">UCF-Crime ROC-AUC</text>
+  <path class="flow-green" d="M1666 551 V589"/>
+
+  <!-- Post-score memory update and legend -->
+  <path class="flow-ochre" d="M1572 415 H1528 V710 H835 V343"/>
+  <text class="small" x="1130" y="731" text-anchor="middle" fill="#8a651e">post-score update if <tspan class="math">a</tspan><tspan baseline-shift="sub" font-size="10">t</tspan> ≤ 0.2</text>
+
+  <line x1="30" y1="718" x2="85" y2="718" class="flow"/>
+  <text class="small" x="98" y="723">main inference</text>
+  <line x1="230" y1="718" x2="285" y2="718" class="flow-ochre"/>
+  <text class="small" x="298" y="723">post-score memory update</text>
+  <text class="tiny" x="520" y="723">All retrieval is chronological; the current target cannot retrieve itself.</text>
+</svg>

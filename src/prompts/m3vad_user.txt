@@ -1,0 +1,15 @@
+Assess the current target frame using the following program-generated evidence:
+
+{evidence_json}
+
+Return this exact JSON schema:
+{{
+  "anomaly_score": 0.0,
+  "visual_evidence": "Concise evidence from the target-frame caption.",
+  "temporal_evidence": "Concise evidence from the 10-second temporal summary.",
+  "memory_comparison": "How retrieved prior examples support or fail to support normality; say that Memory is unavailable when empty.",
+  "memory_used": false,
+  "evidence_conflict": false
+}}
+
+Use memory_used=true only if at least one retrieved example materially influenced the reasoning. Do not add fields containing invented similarity values or probabilities.

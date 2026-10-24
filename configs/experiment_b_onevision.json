@@ -1,0 +1,12 @@
+{
+  "experiment": "B",
+  "target_frame_interval": 10,
+  "default_fps": 30.0,
+  "onevision": {
+    "enabled": true,
+    "model_name": "llava-hf/llava-onevision-qwen2-7b-ov-hf",
+    "num_samples": 16,
+    "duration_seconds": 10.0
+  },
+  "memory": {"enabled": false, "mode": "off", "retrieval": "text"}
+}

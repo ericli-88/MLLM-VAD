@@ -1,0 +1,7 @@
+{
+  "experiment": "A",
+  "target_frame_interval": 16,
+  "default_fps": 30.0,
+  "onevision": {"enabled": false},
+  "memory": {"enabled": false, "mode": "off", "retrieval": "text"}
+}
